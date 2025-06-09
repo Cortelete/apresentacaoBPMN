@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação: Processo de Solicitação de Segunda Chamada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo para a fonte Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Classe para esconder slides */
+        .slide {
+            display: none;
+        }
+        /* Classe para mostrar o slide ativo */
+        .active-slide {
+            display: block;
+        }
+        /* Efeito de transição suave */
+        .slide-content {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 text-gray-800">
+
+    <div id="presentation-container" class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
+        <div id="slides" class="relative w-full aspect-[16/9]">
+
+            <!-- Slide 1: Título e Nomes do Grupo -->
+            <section class="slide active-slide w-full h-full p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gray-900 text-white">
+                <div class="slide-content">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Modelagem e Automação de um Processo de Negócio Realista</h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-blue-300">Solicitação de Segunda Chamada de Prova</h2>
+                    <div class="mt-12 text-lg md:text-xl text-gray-300">
+                        <p>Davi Cortelete</p>
+                        <p>Everson Monegate</p>
+                        <p>Lincoln Tozetto</p>
+                        <p>Rulyan Kozake</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Introdução (Davi) -->
+            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
+                <div class="slide-content">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">1. Introdução e Visão Estratégica</h2>
+                    <p class="text-lg mb-4">"Nosso objetivo foi mapear e otimizar o processo de 'Solicitação de Segunda Chamada', desenvolvendo um modelo resiliente, eficiente e representativo de um ambiente de negócio real, utilizando a ferramenta Bizagi Modeler."</p>
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold mb-2">Estrutura do Processo: 4 Atores</h3>
+                        <ul class="list-disc list-inside text-lg space-y-1">
+                            <li><strong class="font-semibold text-gray-900">Aluno:</strong> O iniciador do processo.</li>
+                            <li><strong class="font-semibold text-gray-900">Sistema:</strong> O núcleo de automação e regras.</li>
+                            <li><strong class="font-semibold text-gray-900">Coordenação:</strong> O decisor humano para exceções.</li>
+                            <li><strong class="font-semibold text-gray-900">Suporte Técnico:</strong> A equipe de resolução de falhas.</li>
+                        </ul>
+                    </div>
+                     <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Davi Cortelete</p>
+                </div>
+            </section>
+            
+            <!-- Slide 3: Diagrama Completo -->
+            <section class="slide w-full h-full p-4 flex flex-col justify-center items-center bg-gray-200">
+                <div class="slide-content w-full h-full flex flex-col items-center justify-center">
+                     <h2 class="text-2xl font-bold mb-4 text-gray-800">Visão Geral do Diagrama BPMN</h2>
+                     <img src="BPMN Final.jpg" alt="Diagrama BPMN Completo do Processo de Segunda Chamada" class="max-w-full max-h-[85%] object-contain rounded-lg shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e2e8f0/4a5568?text=Erro+ao+carregar+o+diagrama';">
+                </div>
+            </section>
+
+
+            <!-- Slide 4: Validação Inicial (Everson) -->
+            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
+                <div class="slide-content">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">2. A Arquitetura da Validação Inicial</h2>
+                    <h3 class="text-xl font-semibold mb-3">O "Portão de Entrada Inteligente"</h3>
+                    <p class="text-lg mb-4">"Em vez de validar o aluno no final, nosso processo inverte a lógica. A primeira ação é `Consultar Status do Aluno` no Sistema Acadêmico, assumindo um ambiente autenticado."</p>
+                    <div class="mt-6 space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-bold text-lg">1. Gateway Técnico</h4>
+                            <p>Verifica se a conexão com o sistema funcionou. Em caso de falha, aciona o `Suporte Técnico` e retoma o processo, garantindo resiliência.</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-bold text-lg">2. Gateway de Negócio</h4>
+                            <p>Se a consulta teve sucesso, verifica a elegibilidade do aluno. Se for inelegível, o processo encerra de forma rápida e eficiente.</p>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Everson Monegate</p>
+                </div>
+            </section>
+
+            <!-- Slide 5: Núcleo do Processo (Lincoln) -->
+            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
+                 <div class="slide-content">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">3. Núcleo do Processo: Decisão e Transação</h2>
+                    <p class="text-lg mb-4">"Após a validação, a solicitação entra no núcleo de decisão, onde o sistema automatiza a análise com três saídas possíveis:"</p>
+                     <ul class="list-none space-y-2 text-lg">
+                        <li><span class="font-bold text-red-600">Requisitos Inválidos:</span> Notificação clara sobre o motivo da rejeição.</li>
+                        <li><span class="font-bold text-green-600">Aprovação Automática:</span> Para casos claros, avança direto para o pagamento.</li>
+                        <li><span class="font-bold text-yellow-600">Requer Análise Manual:</span> Casos ambíguos são escalados para a `Coordenação`.</li>
+                    </ul>
+                    <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+                        <h4 class="font-bold text-lg">Fluxo Transacional</h4>
+                        <p>Uma vez aprovada, o sistema gera a taxa e entra em espera inteligente com um `Gateway Baseado em Eventos`, aguardando a confirmação de pagamento ou a expiração do prazo.</p>
+                    </div>
+                     <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Lincoln Tozetto</p>
+                </div>
+            </section>
+
+            <!-- Slide 6: Desfechos e Conclusão (Rulyan) -->
+            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
+                <div class="slide-content">
+                    <h2 class="text-3xl font-bold mb-4 text-blue-800">4. Desfechos, Resiliência e Conclusão</h2>
+                     <p class="text-lg mb-4">"Os desfechos são tratados com precisão, garantindo o registro de todas as ações no Sistema Acadêmico e completando o ciclo de vida da informação."</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mt-6">
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <h4 class="font-bold text-lg text-green-800">Sucesso</h4>
+                            <p>Pagamento confirmado, prova agendada e ciclo da solicitação completado.</p>
+                        </div>
+                         <div class="p-4 bg-red-50 rounded-lg">
+                            <h4 class="font-bold text-lg text-red-800">Sem Sucesso</h4>
+                            <p>Todos os desfechos negativos (rejeição, cancelamento) são consolidados em um único fim, numa arquitetura limpa.</p>
+                        </div>
+                    </div>
+                     <p class="mt-8 text-lg">"Em conclusão, nosso modelo apresenta uma solução completa que gerencia integrações, o ciclo de vida da informação e o tratamento de erros, resultando em maior eficiência, padronização e transparência."</p>
+                     <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Rulyan Kozake</p>
+                </div>
+            </section>
+
+             <!-- Slide 7: Perguntas -->
+            <section class="slide w-full h-full p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gray-900 text-white">
+                <div class="slide-content">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Obrigado!</h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-blue-300">Estamos abertos para perguntas.</h2>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+
+    <!-- Controles de Navegação -->
+    <div class="mt-6 flex items-center justify-center space-x-4 w-full max-w-5xl px-8">
+        <button id="prevBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg">Anterior</button>
+        <div id="slide-counter" class="text-lg font-semibold text-gray-700"></div>
+        <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg">Próximo</button>
+    </div>
+
+    <script>
+        // Lógica para controlar a apresentação de slides
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slide-counter');
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // Esconde todos os slides
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active-slide');
+            });
+            
+            // Mostra o slide correto
+            if (slides[index]) {
+                slides[index].classList.add('active-slide');
+            }
+            
+            updateControls();
+        }
+
+        function updateControls() {
+            // Atualiza o contador de slides
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Habilita/desabilita botões
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Event Listeners para os botões
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Event Listeners para as teclas de seta
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Inicializa a apresentação
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>
