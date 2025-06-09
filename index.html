@@ -3,148 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apresentação: Processo de Solicitação de Segunda Chamada</title>
+    <title>Apresentação Detalhada: Processo de Segunda Chamada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilo para a fonte Inter */
-        body {
-            font-family: 'Inter', sans-serif;
+        body { font-family: 'Inter', sans-serif; }
+        .slide { display: none; }
+        .active-slide { display: block; }
+        .slide-content { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        #diagram-container { position: relative; width: 100%; max-width: 1000px; margin: auto; }
+        .hotspot {
+            position: absolute; width: 28px; height: 28px; background-color: rgba(29, 78, 216, 0.8);
+            color: white; border-radius: 50%; border: 2px solid white; display: flex;
+            align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-size: 16px; font-weight: bold; z-index: 5;
         }
-        /* Classe para esconder slides */
-        .slide {
-            display: none;
+        .hotspot:hover { transform: scale(1.2); background-color: rgba(37, 99, 235, 1); }
+        
+        #info-box {
+            position: absolute; background-color: white; border: 1px solid #ddd;
+            border-radius: 8px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            width: 280px; z-index: 10; transition: opacity 0.3s, transform 0.3s;
         }
-        /* Classe para mostrar o slide ativo */
-        .active-slide {
-            display: block;
+        #info-box.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+        #info-box h4 { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 8px; }
+        #info-box-close { position: absolute; top: 8px; right: 12px; font-size: 24px; cursor: pointer; color: #9ca3af; }
+        #info-box-close:hover { color: #1f2937; }
+        .zoomable-image { cursor: zoom-in; }
+
+        .info-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        /* Efeito de transição suave */
-        .slide-content {
-            animation: fadeIn 0.5s ease-in-out;
+        .info-card .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .info-card.active {
+            background-color: #eff6ff; /* bg-blue-50 */
+            border-color: #93c5fd; /* border-blue-300 */
+        }
+        .info-card.active .card-content {
+            max-height: 500px; /* Altura suficiente para o conteúdo */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .info-card.active .card-arrow {
+            transform: rotate(180deg);
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 text-gray-800">
+<body class="bg-gray-100 text-gray-800">
 
-    <div id="presentation-container" class="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
-        <div id="slides" class="relative w-full aspect-[16/9]">
-
-            <!-- Slide 1: Título e Nomes do Grupo -->
-            <section class="slide active-slide w-full h-full p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gray-900 text-white">
-                <div class="slide-content">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Modelagem e Automação de um Processo de Negócio Realista</h1>
-                    <h2 class="text-2xl md:text-3xl font-semibold text-blue-300">Solicitação de Segunda Chamada de Prova</h2>
-                    <div class="mt-12 text-lg md:text-xl text-gray-300">
-                        <p>Davi Cortelete</p>
-                        <p>Everson Monegate</p>
-                        <p>Lincoln Tozetto</p>
-                        <p>Rulyan Kozake</p>
+    <div class="flex flex-col items-center justify-center w-full min-h-screen p-2 sm:p-4">
+        <main class="w-full max-w-6xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col">
+            <div id="slides" class="relative w-full aspect-[16/9]">
+                <!-- Slide 1: Título -->
+                <section class="slide w-full h-full p-6 md:p-12 flex flex-col justify-center items-center text-center bg-gray-900 text-white">
+                    <div class="slide-content w-full">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Modelagem e Automação de um Processo de Negócio Realista</h1>
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-blue-300">Solicitação de Segunda Chamada de Prova</h2>
+                        <div class="mt-12 text-md sm:text-lg md:text-xl text-gray-300 space-y-2">
+                            <p>Davi Cortelete</p>
+                            <p>Everson Monegate</p>
+                            <p>Lincoln Tozetto</p>
+                            <p>Rulyan Kozake</p>
+                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Todos</p>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Slide 2: Introdução (Davi) -->
-            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
-                <div class="slide-content">
-                    <h2 class="text-3xl font-bold mb-4 text-blue-800">1. Introdução e Visão Estratégica</h2>
-                    <p class="text-lg mb-4">"Nosso objetivo foi mapear e otimizar o processo de 'Solicitação de Segunda Chamada', desenvolvendo um modelo resiliente, eficiente e representativo de um ambiente de negócio real, utilizando a ferramenta Bizagi Modeler."</p>
-                    <div class="mt-6">
-                        <h3 class="text-xl font-semibold mb-2">Estrutura do Processo: 4 Atores</h3>
-                        <ul class="list-disc list-inside text-lg space-y-1">
-                            <li><strong class="font-semibold text-gray-900">Aluno:</strong> O iniciador do processo.</li>
-                            <li><strong class="font-semibold text-gray-900">Sistema:</strong> O núcleo de automação e regras.</li>
-                            <li><strong class="font-semibold text-gray-900">Coordenação:</strong> O decisor humano para exceções.</li>
-                            <li><strong class="font-semibold text-gray-900">Suporte Técnico:</strong> A equipe de resolução de falhas.</li>
+                <!-- Slide 2: Introdução (Davi) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                    <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">Introdução e Visão Estratégica</h2>
+                        <p class="text-base sm:text-lg mb-4">"Nosso objetivo foi mapear e otimizar o processo de 'Solicitação de Segunda Chamada', desenvolvendo um modelo resiliente, eficiente e representativo de um ambiente de negócio real, utilizando a ferramenta Bizagi Modeler."</p>
+                        <div class="mt-6">
+                            <h3 class="text-lg sm:text-xl font-semibold mb-2">Estrutura do Processo: 4 Atores</h3>
+                            <ul class="list-disc list-inside text-base sm:text-lg space-y-1">
+                                <li><strong class="font-semibold text-gray-900">Aluno:</strong> O iniciador do processo.</li>
+                                <li><strong class="font-semibold text-gray-900">Sistema:</strong> O núcleo de automação e regras.</li>
+                                <li><strong class="font-semibold text-gray-900">Coordenação:</strong> O decisor humano para exceções.</li>
+                                <li><strong class="font-semibold text-gray-900">Suporte Técnico:</strong> A equipe de resolução de falhas.</li>
+                            </ul>
+                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Davi</p>
+                    </div>
+                </section>
+
+                <!-- Slide 3: O Problema (Davi) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                    <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">O Problema de Negócio e Nossa Solução</h2>
+                        <div class="mt-6 grid md:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-8 h-8 text-red-500 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    <h3 class="text-lg font-semibold text-gray-900">Problema: Falta de Padronização</h3>
+                                </div>
+                                <p class="text-gray-600">Cada solicitação era tratada de uma forma, gerando inconsistências, retrabalho para a coordenação e injustiças com os alunos.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-8 h-8 text-green-500 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <h3 class="text-lg font-semibold text-gray-900">Solução: Processo Modelado</h3>
+                                </div>
+                                <p class="text-gray-600">Criamos um fluxo de trabalho único em BPMN. Isso garante que todas as solicitações sigam as mesmas regras, com critérios transparentes e automáticos.</p>
+                            </div>
+                        </div>
+                         <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Davi</p>
+                    </div>
+                </section>
+
+                <!-- Slide 4: Validação Inicial (Everson) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                    <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">A Arquitetura da Validação Inicial</h2>
+                        <h3 class="text-lg sm:text-xl font-semibold mb-3">O "Portão de Entrada Inteligente"</h3>
+                        <p class="text-base sm:text-lg mb-4">"Invertemos a lógica tradicional. A primeira ação do processo é `Consultar Status do Aluno` no Sistema Acadêmico, garantindo que apenas solicitações válidas prossigam e que o sistema seja resiliente."</p>
+                        <div class="mt-6 grid md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                <h4 class="font-bold text-base sm:text-lg">1. Gateway Técnico (Resiliência)</h4>
+                                <p class="text-sm sm:text-base">Verifica a conexão com o sistema. Em caso de falha, aciona o `Suporte Técnico` e retoma o processo, garantindo que falhas não interrompam o fluxo.</p>
+                            </div>
+                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                                <h4 class="font-bold text-base sm:text-lg">2. Gateway de Negócio (Eficiência)</h4>
+                                <p class="text-sm sm:text-base">Se a consulta funcionar, este gateway verifica a elegibilidade do aluno. Se for inelegível, o processo é encerrado imediatamente.</p>
+                            </div>
+                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Everson</p>
+                    </div>
+                </section>
+
+                <!-- Slide 5: Jornada do Aluno (Everson) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                     <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">A Jornada do Aluno: Feedback Imediato</h2>
+                        <p class="text-gray-600 mb-6">Clique nos cards para ver como o aluno é notificado em cada cenário de elegibilidade.</p>
+                        <div class="space-y-4">
+                            <div class="info-card border border-gray-300 rounded-lg p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-lg">Cenário 1: Aluno Elegível</h3>
+                                    <svg class="card-arrow w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                                <div class="card-content text-gray-700"><p>O aluno é imediatamente direcionado para a tela de preenchimento da solicitação, sem nenhuma interrupção. A experiência é fluida e positiva.</p></div>
+                            </div>
+                            <div class="info-card border border-gray-300 rounded-lg p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-lg">Cenário 2: Aluno Inelegível</h3>
+                                    <svg class="card-arrow w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                                <div class="card-content text-gray-700"><p>Uma mensagem clara e instantânea informa o motivo da inelegibilidade (ex: "Matrícula Trancada"). O processo é encerrado de forma transparente, evitando falsas expectativas.</p></div>
+                            </div>
+                             <div class="info-card border border-gray-300 rounded-lg p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-lg">Cenário 3: Erro de Sistema</h3>
+                                    <svg class="card-arrow w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                                <div class="card-content text-gray-700"><p>O aluno recebe uma notificação amigável informando que o sistema está instável e que a equipe técnica já foi acionada. Ele é orientado a tentar novamente mais tarde.</p></div>
+                            </div>
+                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Everson</p>
+                    </div>
+                </section>
+                
+                <!-- Slide 6: Diagrama Interativo -->
+                <section class="slide w-full h-full p-4 flex flex-col justify-center items-center bg-gray-200">
+                    <div class="slide-content w-full h-full flex flex-col items-center justify-center">
+                         <h2 class="text-xl sm:text-2xl font-bold mb-2 text-gray-800">Diagrama BPMN Interativo</h2>
+                         <p class="text-sm text-center text-gray-600 mb-4 px-2">Clique nos ícones <span class="inline-block bg-blue-700 text-white rounded-full text-center font-bold" style="width:18px; height:18px; font-size:12px; line-height:18px;">?</span> para ver detalhes ou na imagem para dar zoom.</p>
+                         <div id="diagram-container">
+                             <img id="diagram-image" src="BPMNFinal.jpg" alt="Diagrama BPMN Completo" class="zoomable-image w-full h-auto object-contain rounded-lg shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e2e8f0/4a5568?text=Imagem+BPMNFinal.jpg+não+encontrada.';">
+                             <div id="hotspot-container"></div>
+                             <div id="info-box" class="hidden">
+                                 <span id="info-box-close">&times;</span>
+                                 <h4 id="info-box-title"></h4>
+                                 <p id="info-box-content"></p>
+                             </div>
+                         </div>
+                         <p class="absolute bottom-4 right-6 text-sm text-gray-600 font-semibold">Orador: Todos</p>
+                    </div>
+                </section>
+                
+                <!-- Slide 7: Núcleo do Processo (Lincoln) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                    <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">Núcleo do Processo: Decisão e Transação</h2>
+                        <p class="text-base sm:text-lg mb-4">"Após a validação, a solicitação entra no núcleo de decisão, onde o sistema automatiza a análise com três saídas possíveis:"</p>
+                        <ul class="list-none space-y-2 text-base sm:text-lg">
+                           <li class="flex items-start"><span class="font-bold text-red-500 mr-2">●</span> <div><strong class="text-red-600">Requisitos Inválidos:</strong> Notificação clara sobre o motivo da rejeição.</div></li>
+                           <li class="flex items-start"><span class="font-bold text-green-500 mr-2">●</span> <div><strong class="text-green-600">Aprovação Automática:</strong> Para casos claros, avança direto para o pagamento.</div></li>
+                           <li class="flex items-start"><span class="font-bold text-yellow-500 mr-2">●</span> <div><strong class="text-yellow-600">Requer Análise Manual:</strong> Casos ambíguos são escalados para a Coordenação.</div></li>
                         </ul>
-                    </div>
-                     <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Davi Cortelete</p>
-                </div>
-            </section>
-            
-            <!-- Slide 3: Diagrama Completo -->
-            <section class="slide w-full h-full p-4 flex flex-col justify-center items-center bg-gray-200">
-                <div class="slide-content w-full h-full flex flex-col items-center justify-center">
-                     <h2 class="text-2xl font-bold mb-4 text-gray-800">Visão Geral do Diagrama BPMN</h2>
-                     <img src="BPMNFinal.png" alt="Diagrama BPMN Completo do Processo de Segunda Chamada" class="max-w-full max-h-[85%] object-contain rounded-lg shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e2e8f0/4a5568?text=Erro+ao+carregar+o+diagrama';">
-                </div>
-            </section>
-
-
-            <!-- Slide 4: Validação Inicial (Everson) -->
-            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
-                <div class="slide-content">
-                    <h2 class="text-3xl font-bold mb-4 text-blue-800">2. A Arquitetura da Validação Inicial</h2>
-                    <h3 class="text-xl font-semibold mb-3">O "Portão de Entrada Inteligente"</h3>
-                    <p class="text-lg mb-4">"Em vez de validar o aluno no final, nosso processo inverte a lógica. A primeira ação é `Consultar Status do Aluno` no Sistema Acadêmico, assumindo um ambiente autenticado."</p>
-                    <div class="mt-6 space-y-4">
-                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                            <h4 class="font-bold text-lg">1. Gateway Técnico</h4>
-                            <p>Verifica se a conexão com o sistema funcionou. Em caso de falha, aciona o `Suporte Técnico` e retoma o processo, garantindo resiliência.</p>
+                        <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+                           <h4 class="font-bold text-base sm:text-lg">Fluxo Transacional</h4>
+                           <p class="text-sm sm:text-base">Aprovada, o sistema gera a taxa e entra em espera com um Gateway Baseado em Eventos, aguardando pagamento ou expiração do prazo.</p>
                         </div>
-                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                            <h4 class="font-bold text-lg">2. Gateway de Negócio</h4>
-                            <p>Se a consulta teve sucesso, verifica a elegibilidade do aluno. Se for inelegível, o processo encerra de forma rápida e eficiente.</p>
-                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Lincoln</p>
                     </div>
-                    <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Everson Monegate</p>
-                </div>
-            </section>
-
-            <!-- Slide 5: Núcleo do Processo (Lincoln) -->
-            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
-                 <div class="slide-content">
-                    <h2 class="text-3xl font-bold mb-4 text-blue-800">3. Núcleo do Processo: Decisão e Transação</h2>
-                    <p class="text-lg mb-4">"Após a validação, a solicitação entra no núcleo de decisão, onde o sistema automatiza a análise com três saídas possíveis:"</p>
-                     <ul class="list-none space-y-2 text-lg">
-                        <li><span class="font-bold text-red-600">Requisitos Inválidos:</span> Notificação clara sobre o motivo da rejeição.</li>
-                        <li><span class="font-bold text-green-600">Aprovação Automática:</span> Para casos claros, avança direto para o pagamento.</li>
-                        <li><span class="font-bold text-yellow-600">Requer Análise Manual:</span> Casos ambíguos são escalados para a `Coordenação`.</li>
-                    </ul>
-                    <div class="mt-6 p-4 bg-gray-100 rounded-lg">
-                        <h4 class="font-bold text-lg">Fluxo Transacional</h4>
-                        <p>Uma vez aprovada, o sistema gera a taxa e entra em espera inteligente com um `Gateway Baseado em Eventos`, aguardando a confirmação de pagamento ou a expiração do prazo.</p>
-                    </div>
-                     <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Lincoln Tozetto</p>
-                </div>
-            </section>
-
-            <!-- Slide 6: Desfechos e Conclusão (Rulyan) -->
-            <section class="slide w-full h-full p-8 md:p-12 flex flex-col justify-center">
-                <div class="slide-content">
-                    <h2 class="text-3xl font-bold mb-4 text-blue-800">4. Desfechos, Resiliência e Conclusão</h2>
-                     <p class="text-lg mb-4">"Os desfechos são tratados com precisão, garantindo o registro de todas as ações no Sistema Acadêmico e completando o ciclo de vida da informação."</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mt-6">
-                        <div class="p-4 bg-green-50 rounded-lg">
-                            <h4 class="font-bold text-lg text-green-800">Sucesso</h4>
-                            <p>Pagamento confirmado, prova agendada e ciclo da solicitação completado.</p>
+                </section>
+                
+                <!-- Slide 8: Gateways (Lincoln) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                    <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">A Lógica da Automação: Gateways em Ação</h2>
+                        <p class="text-gray-600 mb-6">Os gateways são o cérebro do processo. Clique para entender a função de cada um.</p>
+                        <div class="space-y-4">
+                             <div class="info-card border border-gray-300 rounded-lg p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-lg">Gateway Exclusivo (Decisão)</h3>
+                                    <svg class="card-arrow w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                                <div class="card-content text-gray-700"><p>Funciona como um "if/else". Ele analisa uma condição (ex: "A justificativa é um atestado válido?") e direciona o fluxo para UM ÚNICO caminho. Garante que apenas uma rota seja seguida.</p></div>
+                            </div>
+                             <div class="info-card border border-gray-300 rounded-lg p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-lg">Gateway Baseado em Eventos (Espera)</h3>
+                                    <svg class="card-arrow w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                                <div class="card-content text-gray-700"><p>Este gateway pausa o processo e aguarda um evento externo. No nosso caso, ele espera por "Pagamento Confirmado" OU "Prazo Expirado". O primeiro a acontecer define o rumo do processo.</p></div>
+                            </div>
                         </div>
-                         <div class="p-4 bg-red-50 rounded-lg">
-                            <h4 class="font-bold text-lg text-red-800">Sem Sucesso</h4>
-                            <p>Todos os desfechos negativos (rejeição, cancelamento) são consolidados em um único fim, numa arquitetura limpa.</p>
-                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Lincoln</p>
                     </div>
-                     <p class="mt-8 text-lg">"Em conclusão, nosso modelo apresenta uma solução completa que gerencia integrações, o ciclo de vida da informação e o tratamento de erros, resultando em maior eficiência, padronização e transparência."</p>
-                     <p class="mt-6 text-sm text-gray-500 font-semibold">Orador: Rulyan Kozake</p>
-                </div>
-            </section>
+                </section>
+                
+                <!-- Slide 9: Desfechos (Rulyan) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                    <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">Desfechos, Resiliência e Conclusão</h2>
+                        <p class="text-base sm:text-lg mb-4">"Os desfechos são tratados com precisão, garantindo o registro de todas as ações no Sistema Acadêmico e completando o ciclo da informação."</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mt-6">
+                            <div class="p-4 bg-green-100 rounded-lg border border-green-300">
+                                <h4 class="font-bold text-base sm:text-lg text-green-800">Sucesso</h4>
+                                <p class="text-sm sm:text-base">Pagamento confirmado, prova agendada e ciclo da solicitação completado com sucesso.</p>
+                            </div>
+                            <div class="p-4 bg-red-100 rounded-lg border border-red-300">
+                                <h4 class="font-bold text-base sm:text-lg text-red-800">Sem Sucesso</h4>
+                                <p class="text-sm sm:text-base">Todos os desfechos negativos (rejeição, cancelamento, prazo expirado) são consolidados em um único fim, simplificando a arquitetura.</p>
+                            </div>
+                        </div>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Rulyan</p>
+                    </div>
+                </section>
 
-             <!-- Slide 7: Perguntas -->
-            <section class="slide w-full h-full p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gray-900 text-white">
-                <div class="slide-content">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Obrigado!</h1>
-                    <h2 class="text-2xl md:text-3xl font-semibold text-blue-300">Estamos abertos para perguntas.</h2>
-                </div>
-            </section>
-            
-        </div>
+                <!-- Slide 10: Métricas (Rulyan) -->
+                <section class="slide w-full h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                     <div class="slide-content w-full">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-blue-800">Métricas de Sucesso e Impacto no Negócio</h2>
+                        <div class="mt-6 grid md:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-8 h-8 text-blue-600 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <h3 class="text-lg font-semibold text-gray-900">Redução de 75% no Tempo</h3>
+                                </div>
+                                <p class="text-gray-600">A automação elimina gargalos manuais, reduzindo o tempo médio de espera do aluno de dias para horas, ou até minutos.</p>
+                            </div>
+                             <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-8 h-8 text-blue-600 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m0-6H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <h3 class="text-lg font-semibold text-gray-900">Aumento de 90% na Padronização</h3>
+                                </div>
+                                <p class="text-gray-600">Com regras claras e um fluxo único, a consistência das decisões é melhorada, aumentando a percepção de justiça e a satisfação dos alunos.</p>
+                            </div>
+                        </div>
+                         <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Rulyan</p>
+                    </div>
+                </section>
+                
+                <!-- Slide 11: Final -->
+                 <section class="slide w-full h-full p-8 md:p-16 flex flex-col justify-center items-center text-center bg-gray-900 text-white">
+                    <div class="slide-content w-full">
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">Obrigado!</h1>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-300">Estamos abertos para perguntas.</h2>
+                        <p class="absolute bottom-4 right-6 text-sm text-gray-400 font-semibold">Orador: Todos</p>
+                    </div>
+                </section>
+
+            </div>
+            <div class="bg-gray-50 border-t p-4 flex items-center justify-center space-x-4">
+                <button id="prevBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg">Anterior</button>
+                <div id="slide-counter" class="text-lg font-semibold text-gray-700 w-20 text-center"></div>
+                <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg">Próximo</button>
+            </div>
+        </main>
     </div>
 
+    <!-- Modal de Zoom -->
+    <div id="image-modal" class="hidden fixed z-50 p-4 inset-0 bg-black bg-opacity-90 flex justify-center items-center">
+        <span id="close-modal" class="absolute top-4 right-6 text-white text-5xl font-bold cursor-pointer">&times;</span>
+        <img class="max-w-[90vw] max-h-[90vh] object-contain" id="modal-img">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            const showSlide = (index) => {
+                slides.forEach((slide, i) => {
+                    slide.style.display = i === index ? 'block' : 'none';
+                });
+                updateControls();
+            };
+
+            const updateControls = () => {
+                if (slideCounter) slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+                if (prevBtn) prevBtn.disabled = currentSlide === 0;
+                if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+            };
+
+            const nextSlide = () => { if (currentSlide < totalSlides - 1) showSlide(++currentSlide); };
+            const prevSlide = () => { if (currentSlide > 0) showSlide(--currentSlide); };
+            
+            prevBtn?.addEventListener('click', prevSlide);
+            nextBtn?.addEventListener('click', nextSlide);
+
+            const imageModal = document.getElementById('image-modal');
+            const diagramImage = document.getElementById('diagram-image');
+            const modalImg = document.getElementById('modal-img');
+            const closeModalBtn = document.getElementById('close-modal');
+            const openModal = () => { if(imageModal && diagramImage) { imageModal.classList.remove('hidden'); modalImg.src = diagramImage.src; } };
+            const closeModal = () => imageModal?.classList.add('hidden');
+            diagramImage?.addEventListener('click', openModal);
+            closeModalBtn?.addEventListener('click', closeModal);
+            imageModal?.addEventListener('click', (e) => e.target === imageModal && closeModal());
+            
+            const hotspotContainer = document.getElementById('hotspot-container');
+            const infoBox = document.getElementById('info-box');
+            const infoTitle = document.getElementById('info-box-title');
+            const infoContent = document.getElementById('info-box-content');
+            const infoCloseBtn = document.getElementById('info-box-close');
+            
+            const hotspotsData = [
+                { id: 1, top: '13%', left: '16%', title: 'Consulta de Status', text: 'O processo inicia com a verificação automática do status do aluno no sistema acadêmico para confirmar sua elegibilidade.' },
+                { id: 2, top: '13%', left: '44%', title: 'Preenchimento da Solicitação', text: 'Se o aluno for elegível, ele preenche o formulário de solicitação, anexando os documentos e a justificativa para a segunda chamada.' },
+                { id: 3, top: '44%', left: '35%', title: 'Análise de Requisitos', text: 'O sistema faz uma análise automática dos documentos. Se a justificativa for clara (ex: atestado médico), o processo é aprovado automaticamente.' },
+                { id: 4, top: '68%', left: '35%', title: 'Análise Manual', text: 'Justificativas que não se enquadram nas regras automáticas são enviadas para um coordenador, que fará uma análise manual.' },
+                { id: 5, top: '44%', left: '60%', title: 'Gateway de Pagamento', text: 'Após a aprovação, uma taxa é gerada e o processo aguarda a confirmação do pagamento. O sistema fica em espera, reagindo a dois possíveis eventos: pagamento confirmado ou expiração do prazo.' },
+                { id: 6, top: '44%', left: '84%', title: 'Registro da Aprovação', text: 'Com o pagamento confirmado, o sistema registra a aprovação final e agenda a prova para o aluno, finalizando o processo com sucesso.' },
+                { id: 7, top: '86%', left: '47%', title: 'Tratamento de Falhas', text: 'Se houver falha na comunicação com o sistema principal, um chamado é aberto para o Suporte Técnico, garantindo a resiliência do processo.' }
+            ];
+            
+            if(hotspotContainer){
+                hotspotsData.forEach(data => {
+                    const hotspot = document.createElement('button');
+                    hotspot.className = 'hotspot';
+                    hotspot.style.top = data.top;
+                    hotspot.style.left = data.left;
+                    hotspot.textContent = '?';
+                    hotspot.setAttribute('aria-label', `Informação sobre ${data.title}`);
+                    hotspot.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if(infoBox && infoTitle && infoContent){
+                            infoTitle.textContent = data.title;
+                            infoContent.textContent = data.text;
+                            infoBox.style.top = `calc(${data.top} + 35px)`;
+                            infoBox.style.left = data.left;
+                            infoBox.classList.remove('hidden');
+                        }
+                    });
+                    hotspotContainer.appendChild(hotspot);
+                });
+            }
+            const closeInfoBox = () => infoBox?.classList.add('hidden');
+            infoCloseBtn?.addEventListener('click', closeInfoBox);
+            diagramImage?.addEventListener('click', closeInfoBox);
+
+            document.querySelectorAll('.info-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('active');
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextSlide();
+                else if (e.key === 'ArrowLeft') prevSlide();
+                else if (e.key === 'Escape') { closeModal(); closeInfoBox(); }
+            });
+
+            showSlide(currentSlide);
+        });
+    </script>
 </body>
 </html>
