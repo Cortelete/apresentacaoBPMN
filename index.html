@@ -29,6 +29,10 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Cursor de zoom para a imagem clicável */
+        .zoomable-image {
+            cursor: zoom-in;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 text-gray-800">
@@ -72,8 +76,8 @@
             <section class="slide w-full h-full p-4 flex flex-col justify-center items-center bg-gray-200">
                 <div class="slide-content w-full h-full flex flex-col items-center justify-center">
                      <h2 class="text-2xl font-bold mb-4 text-gray-800">Visão Geral do Diagrama BPMN</h2>
-                     <!-- O caminho da imagem foi atualizado para o diretório raiz -->
-                     <img src="main/BPMNFinal.png" alt="Diagrama BPMN Completo do Processo de Segunda Chamada" class="max-w-full max-h-[85%] object-contain rounded-lg shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e2e8f0/4a5568?text=Imagem+BPMNFinal.png+não+encontrada.';">
+                     <!-- O caminho da imagem foi atualizado e uma classe para zoom foi adicionada -->
+                     <img id="diagram-image" src="main/BPMNFinal.png" alt="Diagrama BPMN Completo do Processo de Segunda Chamada" class="zoomable-image max-w-full max-h-[85%] object-contain rounded-lg shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/1280x720/e2e8f0/4a5568?text=Imagem+main/BPMNFinal.png+não+encontrada.';">
                 </div>
             </section>
 
@@ -154,6 +158,12 @@
         <button id="nextBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg">Próximo</button>
     </div>
 
+    <!-- Modal para Zoom da Imagem -->
+    <div id="image-modal" class="hidden fixed z-50 p-4 inset-0 bg-black bg-opacity-90 flex justify-center items-center transition-opacity duration-300">
+        <span id="close-modal" class="absolute top-4 right-6 text-white text-5xl font-bold hover:text-gray-400 cursor-pointer">&times;</span>
+        <img class="max-w-[90vw] max-h-[90vh] object-contain" id="modal-img">
+    </div>
+
     <script>
         // Lógica para controlar a apresentação de slides
         const slides = document.querySelectorAll('.slide');
@@ -165,24 +175,17 @@
         const totalSlides = slides.length;
 
         function showSlide(index) {
-            // Esconde todos os slides
-            slides.forEach((slide, i) => {
+            slides.forEach((slide) => {
                 slide.classList.remove('active-slide');
             });
-            
-            // Mostra o slide correto
             if (slides[index]) {
                 slides[index].classList.add('active-slide');
             }
-            
             updateControls();
         }
 
         function updateControls() {
-            // Atualiza o contador de slides
             slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Habilita/desabilita botões
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === totalSlides - 1;
         }
@@ -201,18 +204,45 @@
             }
         }
 
-        // Event Listeners para os botões
         nextBtn.addEventListener('click', nextSlide);
         prevBtn.addEventListener('click', prevSlide);
 
-        // Event Listeners para as teclas de seta
         document.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowRight') {
                 nextSlide();
             } else if (event.key === 'ArrowLeft') {
                 prevSlide();
+            } else if (event.key === 'Escape') { // Fecha o modal com a tecla Esc
+                imageModal.classList.add('hidden');
             }
         });
+
+        // Lógica do Modal de Imagem
+        const imageModal = document.getElementById('image-modal');
+        const diagramImage = document.getElementById('diagram-image');
+        const modalImg = document.getElementById('modal-img');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        if (diagramImage) {
+            diagramImage.addEventListener('click', function() {
+                imageModal.classList.remove('hidden');
+                modalImg.src = this.src;
+            });
+        }
+
+        if(closeModalBtn) {
+            closeModalBtn.addEventListener('click', function() {
+                imageModal.classList.add('hidden');
+            });
+        }
+        
+        // Fecha o modal ao clicar fora da imagem
+        imageModal.addEventListener('click', function(event) {
+            if (event.target === imageModal) {
+                imageModal.classList.add('hidden');
+            }
+        });
+
 
         // Inicializa a apresentação
         showSlide(currentSlide);
